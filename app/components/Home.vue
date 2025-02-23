@@ -1,7 +1,8 @@
 <template>
   <Page class="page">
+    <!-- Barra de acción -->
     <ActionBar class="action-bar">
-      <Label text="Telemedicina" class="title" />
+      <Label text="T.A.P" class="title" />
     </ActionBar>
 
     <StackLayout class="container">
@@ -20,41 +21,36 @@
       <!-- Opciones después de iniciar sesión -->
       <StackLayout v-else class="profile-container">
         <Label :text="'Bienvenido, ' + username" class="welcome-text" />
+        <Label text="¿Qué deseas hacer hoy?" class="subtitle-text" />
         
-        <!-- Opción: Ver Perfil -->
-        <StackLayout class="profile-option" @tap="goToProfile">
-          <Image src="~/assets/icons/profile.png" class="option-icon" />
-          <Label text="Ver Perfil" class="option-text" />
-        </StackLayout>
-        
-        <!-- Opción: Historial Médico -->
-        <StackLayout class="profile-option" @tap="goToMedicalHistory">
-          <Image src="~/assets/icons/history.png" class="option-icon" />
-          <Label text="Historial Médico" class="option-text" />
-        </StackLayout>
-        
-        <!-- Opción: Atención Inmediata -->
-        <StackLayout class="profile-option" @tap="requestImmediateCare">
-          <Image src="~/assets/icons/immediate.png" class="option-icon" />
-          <Label text="Atención Inmediata" class="option-text" />
-        </StackLayout>
-        
-        <!-- Opción: Atención Programada -->
-        <StackLayout class="profile-option" @tap="scheduleAppointment">
-          <Image src="~/assets/icons/scheduled.png" class="option-icon" />
-          <Label text="Atención Programada" class="option-text" />
-        </StackLayout>
-        
-        <!-- Opción: Notificaciones -->
-        <StackLayout class="profile-option" @tap="viewNotifications">
-          <Image src="~/assets/icons/notifications.png" class="option-icon" />
-          <Label text="Notificaciones" class="option-text" />
-        </StackLayout>
-        
-        <!-- Opción: Cerrar Sesión -->
-        <StackLayout class="profile-option" @tap="logout">
-          <Image src="~/assets/icons/logout.png" class="option-icon" />
-          <Label text="Cerrar Sesión" class="option-text danger-text" />
+        <!-- Opciones en columna (una debajo de la otra) -->
+        <StackLayout class="options-stack">
+          <Button text="Ver Perfil" @tap="goToProfile" class="option-button" />
+          <Button
+            text="Historial Médico"
+            @tap="goToMedicalHistory"
+            class="option-button"
+          />
+          <Button
+            text="Atención Inmediata"
+            @tap="requestImmediateCare"
+            class="option-button"
+          />
+          <Button
+            text="Atención Programada"
+            @tap="scheduleAppointment"
+            class="option-button"
+          />
+          <Button
+            text="Notificaciones"
+            @tap="viewNotifications"
+            class="option-button"
+          />
+          <Button
+            text="Cerrar Sesión"
+            @tap="logout"
+            class="option-button danger"
+          />
         </StackLayout>
       </StackLayout>
     </StackLayout>
@@ -103,30 +99,48 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.page {
-  background-color: #1e1e2e;
+/* ---- Paleta de colores basada en tu imagen y el nuevo color (#c7e49c) ---- */
+:root {
+  --color-bg-dark: #062B3F;      /* Fondo principal */
+  --color-bg-bar:  #0F3A4D;      /* Barra de acción */
+  --color-green:   #17B978;      /* Verde principal */
+  --color-green-alt: #c7e49c;    /* Color pastel pedido */
+  --color-white:   #ffffff;
+  --color-danger:  #EB5757;
 }
+
+/* Fondo principal de toda la página */
+.page {
+  background-color: var(--color-bg-dark);
+}
+
+/* Barra de acción */
 .action-bar {
-  background-color: #2b2b40;
-  color: white;
+  background-color: var(--color-bg-bar);
+  color: var(--color-white);
   text-align: center;
   padding: 16px;
 }
 .title {
-  color: white;
-  font-size: 20px;
+  color: var(--color-white);
+  font-size: 22px;
   font-weight: bold;
 }
+
+/* Contenedor principal */
 .container {
   padding: 20px;
   align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
+/* --------------------- Pantalla de Login --------------------- */
 .login-container {
   width: 100%;
   max-width: 320px;
   padding: 25px;
-  background-color: #2b2b40;
+  background-color: var(--color-bg-bar);
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   align-items: center;
@@ -135,9 +149,9 @@ export default Vue.extend({
   width: 100%;
   padding: 12px;
   border-radius: 6px;
-  border: 1px solid #444;
-  background-color: #3b3b54;
-  color: white;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: var(--color-white);
   margin-bottom: 15px;
 }
 .button {
@@ -148,63 +162,64 @@ export default Vue.extend({
   border-radius: 6px;
   text-align: center;
   margin-bottom: 15px;
+  border: none;
 }
 .primary {
-  background-color: #4a90e2;
-  color: white;
-}
-.secondary {
-  background-color: #03dac6;
-  color: white;
-}
-.danger {
-  background-color: #b00020;
-  color: white;
+  background-color: var(--color-green);
+  color: var(--color-white);
 }
 
+/* --------------------- Pantalla Post-Login --------------------- */
 .profile-container {
   width: 100%;
-  max-width: 320px;
-  padding: 25px;
-  background: linear-gradient(135deg, #2b2b40, #3b3b54);
+  max-width: 360px;
+  padding: 30px;
+  background-color: var(--color-bg-bar);
   border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
   align-items: center;
-  margin: 30px auto;
+  margin-top: 20px;
 }
 .welcome-text {
-  font-size: 22px;
-  color: #ffffff;
-  font-weight: bold;
+  font-size: 24px;
+  color: var(--color-white);
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.subtitle-text {
+  color: #c1c1c1;
+  font-size: 16px;
   margin-bottom: 20px;
   text-align: center;
 }
 
-/* Estilos para las opciones de perfil */
-.profile-option {
-  flex-direction: row;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 12px;
-  border-radius: 6px;
-  margin-bottom: 10px;
+/* Opciones en columna */
+.options-stack {
   width: 100%;
-  transition: background-color 0.3s, transform 0.2s;
 }
-.profile-option:active {
-  opacity: 0.8;
+
+/* Botones de opciones con degradado que mezcla verde y #c7e49c */
+.option-button {
+  background: linear-gradient(90deg, var(--color-green) 0%, var(--color-green-alt) 100%);
+  color: var(--color-bg-dark);
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  padding: 14px;
+  text-align: center;
+  transition: background-color 0.3s, transform 0.2s;
+  border: none;
+}
+.option-button:active {
+  opacity: 0.9;
   transform: scale(0.98);
 }
-.option-icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 10px;
-}
-.option-text {
-  font-size: 16px;
-  color: white;
-}
-.danger-text {
-  color: #ff5252;
+
+/* Botón de cerrar sesión */
+.danger {
+  background: var(--color-danger);
+  color: var(--color-white);
 }
 </style>
