@@ -1,6 +1,5 @@
 <template>
   <Page class="page">
-    <!-- Barra de acción -->
     <ActionBar class="action-bar">
       <Label text="T.A.P" class="title" />
     </ActionBar>
@@ -23,7 +22,7 @@
         <Label :text="'Bienvenido, ' + username" class="welcome-text" />
         <Label text="¿Qué deseas hacer hoy?" class="subtitle-text" />
         
-        <!-- Opciones en columna (una debajo de la otra) -->
+        <!-- Opciones en columna -->
         <StackLayout class="options-stack">
           <Button text="Ver Perfil" @tap="goToProfile" class="option-button" />
           <Button
@@ -59,6 +58,8 @@
 
 <script lang="ts">
 import Vue from 'nativescript-vue';
+import MedicalHistory from './MedicalHistory.vue'; // <-- Importa el componente
+import ScheduleAtention from './ScheduleAtention.vue'; // <-- Importa el componente
 
 export default Vue.extend({
   data() {
@@ -84,12 +85,16 @@ export default Vue.extend({
     },
     goToMedicalHistory() {
       console.log('Accediendo al historial médico');
+            this.$navigateTo(MedicalHistory);
+
     },
     requestImmediateCare() {
       console.log('Solicitando atención inmediata');
     },
     scheduleAppointment() {
       console.log('Agendando una cita médica');
+                  this.$navigateTo(ScheduleAtention);
+
     },
     viewNotifications() {
       console.log('Mostrando notificaciones');
@@ -98,31 +103,21 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped>
-/* ---- Paleta de colores basada en tu imagen y el nuevo color (#c7e49c) ---- */
-:root {
-  --color-bg-dark: #062B3F;      /* Fondo principal */
-  --color-bg-bar:  #0F3A4D;      /* Barra de acción */
-  --color-green:   #17B978;      /* Verde principal */
-  --color-green-alt: #c7e49c;    /* Color pastel pedido */
-  --color-white:   #ffffff;
-  --color-danger:  #EB5757;
-}
-
-/* Fondo principal de toda la página */
+<!-- IMPORTANTE: Sin "scoped" para que el estilo afecte a todo el Page -->
+<style>
+/* Fondo oscuro forzado con !important y 100% de ancho/alto */
 .page {
-  background-color: var(--color-bg-dark);
+  background-color: #062B3F !important;
+  width: 100%;
+  height: 100%;
 }
 
-/* Barra de acción */
+/* Barra de acción en un tono oscuro */
 .action-bar {
-  background-color: var(--color-bg-bar);
-  color: var(--color-white);
-  text-align: center;
-  padding: 16px;
+  background-color: #0F3A4D !important;
 }
 .title {
-  color: var(--color-white);
+  color: #ffffff;
   font-size: 22px;
   font-weight: bold;
 }
@@ -135,12 +130,12 @@ export default Vue.extend({
   height: 100%;
 }
 
-/* --------------------- Pantalla de Login --------------------- */
+/* --- Pantalla de Login --- */
 .login-container {
   width: 100%;
   max-width: 320px;
   padding: 25px;
-  background-color: var(--color-bg-bar);
+  background-color: #0F3A4D;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   align-items: center;
@@ -151,7 +146,7 @@ export default Vue.extend({
   border-radius: 6px;
   border: none;
   background-color: rgba(255, 255, 255, 0.2);
-  color: var(--color-white);
+  color: #ffffff;
   margin-bottom: 15px;
 }
 .button {
@@ -165,16 +160,16 @@ export default Vue.extend({
   border: none;
 }
 .primary {
-  background-color: var(--color-green);
-  color: var(--color-white);
+  background-color: #17B978 !important;
+  color: #ffffff !important;
 }
 
-/* --------------------- Pantalla Post-Login --------------------- */
+/* --- Pantalla Post-Login --- */
 .profile-container {
   width: 100%;
   max-width: 360px;
   padding: 30px;
-  background-color: var(--color-bg-bar);
+  background-color: #0F3A4D;
   border-radius: 12px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
   align-items: center;
@@ -182,7 +177,7 @@ export default Vue.extend({
 }
 .welcome-text {
   font-size: 24px;
-  color: var(--color-white);
+  color: #ffffff;
   font-weight: 700;
   margin-bottom: 8px;
   text-align: center;
@@ -199,17 +194,17 @@ export default Vue.extend({
   width: 100%;
 }
 
-/* Botones de opciones con degradado que mezcla verde y #c7e49c */
+/* Botones de opciones con degradado desde verde (#17B978) a #c7e49c */
 .option-button {
-  background: linear-gradient(90deg, var(--color-green) 0%, var(--color-green-alt) 100%);
-  color: var(--color-bg-dark);
+  background: linear-gradient(90deg, #17B978 0%, #c7e49c 100%) !important;
+  color: #062B3F !important;
   font-size: 16px;
   font-weight: 600;
   border-radius: 8px;
   margin-bottom: 12px;
   padding: 14px;
   text-align: center;
-  transition: background-color 0.3s, transform 0.2s;
+  transition: opacity 0.3s, transform 0.2s;
   border: none;
 }
 .option-button:active {
@@ -219,7 +214,7 @@ export default Vue.extend({
 
 /* Botón de cerrar sesión */
 .danger {
-  background: var(--color-danger);
-  color: var(--color-white);
+  background: #EB5757 !important;
+  color: #ffffff !important;
 }
 </style>
